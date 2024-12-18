@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tic-Tac-Toe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000;
+            color: #0f0;
+            font-family: 'Press Start 2P', cursive;
+        }
+        .game-container {
+            text-align: center;
+        }
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-gap: 10px;
+            margin: 20px 0;
+        }
+        .cell {
+            width: 100px;
+            height: 100px;
+            background-color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 48px;
+            cursor: pointer;
+            border: 2px solid #0f0;
+            transition: background-color 0.3s;
+        }
+        .cell:hover {
+            background-color: #444;
+        }
+        .cell button {
+            background: none;
+            border: none;
+            color: #0f0;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 36px;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+        .status {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="status">
+            {% if board[0][0]['value'] == 'X' or board[0][0]['value'] == 'O' %}
+                AI's Turn
+            {% else %}
+                Your Turn
+            {% endif %}
+        </div>
+        <div class="board">
+            {% for row in board %}
+                {% for cell in row %}
+                    <div class="cell">
+                        {% if cell['value'] == ' ' %}
+                            <form action="/move" method="post">
+                                <input type="hidden" name="move" value="{{ cell['move_num'] }}">
+                                <button type="submit">{{ cell['move_num'] }}</button>
+                            </form>
+                        {% else %}
+                            {{ cell['value'] }}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
